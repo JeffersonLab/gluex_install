@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 apt-get -y install subversion g++ gfortran xutils-dev libxt-dev libxft-dev \
     liblapack-dev libblas-dev libmotif-dev dpkg-dev libxpm-dev libxext-dev \
     expect libgl1-mesa-dev libmysqlclient-dev tcsh libbz2-dev
