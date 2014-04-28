@@ -13,3 +13,7 @@ do
 done
 
 cd /usr/include/freetype2 ; ln -s ../freetype2 freetype # for ROOT
+
+cd /usr/lib
+ln -s liblapack.a liblapack3.a
+ln -s libblas.a libblas3.a
