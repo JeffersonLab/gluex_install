@@ -1,5 +1,5 @@
 #!/bin/bash
-mkdir gluex
+mkdir -p gluex
 pushd gluex
 svn checkout https://halldsvn.jlab.org/repos/trunk/scripts/build_scripts
 pwd_string=`pwd`
