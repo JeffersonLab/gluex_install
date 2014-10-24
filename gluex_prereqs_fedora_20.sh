@@ -1,6 +1,10 @@
 #!/bin/sh
-yum update -y audit
-yum install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
-    motif-devel lapack-devel blas-devel libXpm-devel expect mysql-devel \
-    bzip2-devel tcsh scons
-cd /usr/include ; ln -s freetype2/freetype freetype
+yum -y install epel-release
+file=prereqs_redhat.sh
+if [ ! -f $file ]
+    then
+    echo $file not found in current directory
+    exit 1
+fi
+./$file
+yum -y update sqlite

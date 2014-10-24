@@ -7,4 +7,3 @@ if [ ! -f $file ]
     exit 1
 fi
 ./$file
-yum -y install lapack-static blas-static
