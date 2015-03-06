@@ -10,7 +10,7 @@ echo source \$GLUEX_TOP/build_scripts/gluex_env.sh >> setup.sh
 echo setenv GLUEX_TOP $pwd_string > setup.csh
 echo source \$GLUEX_TOP/build_scripts/gluex_env.csh >> setup.csh
 rm -fv version.xml
-wget --no-check-certificate https://halldweb1.jlab.org/dist/version.xml
+wget --no-check-certificate https://halldweb.jlab.org/dist/version.xml
 eval `$BUILD_SCRIPTS/version.pl -sbash version.xml`
 source $BUILD_SCRIPTS/gluex_env.sh
 echo ++++++++++++++++++++++++++++++++++++++++++DEBUG++++++++++++++++++++++++
