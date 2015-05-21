@@ -1,7 +1,8 @@
 #!/bin/bash
-mkdir -p gluex
-pushd gluex
-svn checkout https://halldsvn.jlab.org/repos/trunk/scripts/build_scripts
+mkdir -p gluex_top
+pushd gluex_top
+wget --no-check-certificate https://halldweb.jlab.org/dist/build_scripts.tar.gz
+tar zxvf build_scripts.tar.gz
 pwd_string=`pwd`
 export GLUEX_TOP=$pwd_string
 export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
@@ -18,7 +19,6 @@ else
     echo getting version.xml from halldweb
     wget --no-check-certificate https://halldweb.jlab.org/dist/version.xml
 fi
-eval `$BUILD_SCRIPTS/version.pl -sbash version.xml`
-source $BUILD_SCRIPTS/gluex_env.sh
+source $BUILD_SCRIPTS/gluex_env_version.sh
 make -f $BUILD_SCRIPTS/Makefile_all gluex
 popd
