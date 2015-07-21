@@ -8,10 +8,12 @@ export GLUEX_TOP=$pwd_string
 export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
 rm -fv setup.sh
 echo export GLUEX_TOP=$pwd_string > setup.sh
-echo source \$GLUEX_TOP/build_scripts/gluex_env.sh >> setup.sh
+echo export BUILD_SCRIPTS=\$GLUEX_TOP/build_scripts >> setup.sh
+echo source \$BUILD_SCRIPTS/gluex_env_version.sh $pwd_string/version.xml >> setup.sh
 rm -fv setup.csh
 echo setenv GLUEX_TOP $pwd_string > setup.csh
-echo source \$GLUEX_TOP/build_scripts/gluex_env.csh >> setup.csh
+echo setenv BUILD_SCRIPTS \$GLUEX_TOP/build_scripts >> setup.csh
+echo source \$BUILD_SCRIPTS/gluex_env_version.csh $pwd_string/version.xml >> setup.csh
 if [ -f version.xml ]
     then
     echo version.xml exists
