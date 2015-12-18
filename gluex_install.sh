@@ -1,8 +1,7 @@
 #!/bin/bash
 mkdir -p gluex_top
 pushd gluex_top
-wget --no-check-certificate https://halldweb.jlab.org/dist/build_scripts.tar.gz
-tar zxvf build_scripts.tar.gz
+git clone https://github.com/jeffersonlab/build_scripts
 pwd_string=`pwd`
 export GLUEX_TOP=$pwd_string
 export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
