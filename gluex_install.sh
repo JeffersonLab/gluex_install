@@ -1,7 +1,10 @@
 #!/bin/bash
 mkdir -p gluex_top
 pushd gluex_top
-git clone https://github.com/jeffersonlab/build_scripts
+rm -rf build_scripts-latest latest.tar.gz build_scripts
+wget https://github.com/jeffersonlab/build_scripts/archive/latest.tar.gz
+tar zxf latest.tar.gz
+ln -s build_scripts-latest build_scripts
 pwd_string=`pwd`
 export GLUEX_TOP=$pwd_string
 export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
