@@ -2,7 +2,7 @@
 mkdir -p gluex_top
 pushd gluex_top
 rm -rf build_scripts-latest latest.tar.gz build_scripts
-wget -O latest.tar.gz https://github.com/jeffersonlab/build_scripts/archive/latest.tar.gz
+wget -O latest.tar.gz --no-check-certificate https://github.com/jeffersonlab/build_scripts/archive/latest.tar.gz
 tar zxf latest.tar.gz
 ln -s build_scripts-latest build_scripts
 pwd_string=`pwd`
