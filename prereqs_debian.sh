@@ -1,9 +1,9 @@
 #!/bin/bash
-apt-get -y install subversion g++ gfortran xutils-dev libxt-dev libxft-dev \
-    liblapack-dev libblas-dev libmotif-dev dpkg-dev libxpm-dev libxext-dev \
+apt-get -y install subversion gfortran xutils-dev libxt-dev libxft-dev \
+    liblapack-dev libblas-dev libmotif-dev libxpm-dev libxext-dev \
     expect libgl1-mesa-dev libmysqlclient-dev tcsh libbz2-dev scons \
     libxml-simple-perl libxml-writer-perl libfile-slurp-perl git cmake \
-    python-dev
+    python-dev libglu1-mesa-dev
 
 cd /usr/bin; ln -s make gmake
 
@@ -15,7 +15,3 @@ do
 done
 
 cd /usr/include/freetype2 ; ln -s ../freetype2 freetype # for ROOT
-
-cd /usr/lib
-ln -s liblapack.a liblapack3.a
-ln -s libblas.a libblas3.a
