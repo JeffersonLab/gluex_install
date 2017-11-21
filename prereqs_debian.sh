@@ -4,7 +4,7 @@ apt-get -y install subversion gfortran xutils-dev libxt-dev libxft-dev \
     expect libgl1-mesa-dev libmysqlclient-dev tcsh libbz2-dev scons \
     libxml-simple-perl libxml-writer-perl libfile-slurp-perl git cmake \
     python-dev libglu1-mesa-dev libqt4-dev libxmu-dev libboost-dev \
-    libboost-python-dev libxi-dev
+    libboost-python-dev libxi-dev libgsl-dev
 
 cd /usr/bin; ln -s make gmake
 
