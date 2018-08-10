@@ -1,6 +1,14 @@
 #! /usr/bin/env python
-import sys
+import sys,os
 import requests
+import re
+import glob
+
+# globals
+if "GLUEX_INSTALL_HOME" in os.environ:
+    GLUEX_INSTALL_HOME = os.environ["GLUEX_INSTALL_HOME"]
+else:
+    GLUEX_INSTALL_HOME = os.cwd()
 
 ############################################
 
@@ -29,6 +37,9 @@ class BashPrint():
 
 ############################################
 
+def get_release_list_local():
+    local_xml_files = glob.glob(os.path.join(GLUEX_INSTALL_HOME,"version*.xml"))
+    return [ fname.split('/')[-1] for fname in local_xml_files ]
 
 def get_release_list():
     releases = {}
@@ -41,8 +52,21 @@ def get_release_list():
     return releases
 
 def do_show(releases):
+    local_release_files = get_release_list_local()
     for release in sorted(releases.keys()):
+        if releases[release] in local_release_files:
+            release += "*"
         print release
+
+def do_show_allxml(releases):
+    print "All versions available at JLab:"
+    r = requests.get("https://halldweb.jlab.org/dist/")
+    pattern = '.+?<a href=".+?">(version.+?.xml)</a>.+?'
+    p = re.compile(pattern)
+    for entry in r.content.splitlines():
+        m = p.match(entry)
+        if m:
+            print m.group(1)
 
 def do_build(releases, release_to_build):
     # needs some more error checking
@@ -71,35 +95,42 @@ def do_config(releases, release_to_build):
 if __name__ == "__main__":
     sys.stdout = TermPrint()
     
+    # get info
+    releases = get_release_list()
+
     # handle arguments
     command = "show"   # default to showing the list of releases
     if len(sys.argv) > 1:
-        # supported commands
-        command_list = [ "show", "build" ]
-        command = sys.argv[1]
-        if command not in command_list:
-            print "\'%s\' not a supported command!"%command
-            print "  commands = %s"%(" ".join(command_list))
-            exit(0)
-        if command == "build":
-            if len(sys.argv) == 2:
-                print "Need to specify release to build!\n"
-                commmand = "show" # now show what releases are available
-            else:
-                release_to_build = sys.argv[2]
-        elif command == "config":
-            if len(sys.argv) == 2:
-                print "Need to specify release to config!\n"
-                commmand = "show" # now show what releases are available
-            else:
-                release_to_build = sys.argv[2]
-
-    # get info
-    releases = get_release_list()
+        # if the first argument is one of the supported releases, then we configure it
+        if command in releases:
+            release_to_config = command
+            command = "config"
+        else:
+            # supported commands
+            command_list = [ "show", "show-all", "build", "config" ]
+            command = sys.argv[1]
+            if command not in command_list:
+                print "\'%s\' not a supported command!"%command
+                print "  commands = %s"%(" ".join(command_list))
+                exit(0)
+            if command == "build":
+                if len(sys.argv) == 2:
+                    print "Need to specify release to build!\n"
+                    commmand = "show" # now show what releases are available
+                else:
+                    release_to_build = sys.argv[2]
+            elif command == "config":
+                if len(sys.argv) == 2:
+                    print "Need to specify release to config!\n"
+                    commmand = "show" # now show what releases are available
+                else:
+                    release_to_build = sys.argv[2]
 
     # do commands
     if command == "show":
         do_show(releases)
+    elif command == "show-all":
+        do_show_allxml(releases)
     elif command == "build":
         do_build(releases, release_to_build)
     elif command == "config":
