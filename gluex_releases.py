@@ -77,23 +77,22 @@ def do_build(releases, release_to_build):
     # get version XML file
     os.system("curl -O https://halldweb.jlab.org/dist/%s"%releases[release_to_build])
     
-    # link this to "version.xml" for build scripts
-    if os.path.exists("version.xml"):
-        os.remove("version.xml")
-    os.link(releases[release_to_build], "version.xml")
-
     # do the build
-    os.system("./gluex_install.sh")
+    os.system("./gluex_install_version.sh %s"%releases[release_to_build])
+    print "build of %s completed!"%releases[release_to_build]
 
 def do_config(releases, release_to_build):
     # needs some more error checking
     if release_to_build not in releases.keys():
         print "Release \'%s\' not in list of supported releases!\n"%release_to_build
         do_show(releases)
-    
 
+    # call the release configuration script
+    sys.stdout.write("source %s/setups/setup.%s.sh"%(GLUEX_TOP,release_to_build))
+    
 if __name__ == "__main__":
-    sys.stdout = TermPrint()
+    #sys.stdout = TermPrint()
+    sys.stdout = BashPrint()
     
     # get info
     releases = get_release_list()

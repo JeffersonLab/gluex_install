@@ -20,14 +20,15 @@ version_name=${version_file%.*}
 pwd_string=`pwd`
 export GLUEX_TOP=$pwd_string
 export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
-rm -fv setup.$version_name.sh
-echo export GLUEX_TOP=$pwd_string > setup.$version_name.sh
-echo export BUILD_SCRIPTS=\$GLUEX_TOP/build_scripts >> setup.$version_name.sh
-echo source \$BUILD_SCRIPTS/gluex_env_version.sh $pwd_string/$version_file >> setup.$version_name.sh
-rm -fv setup.$version_name.csh
-echo setenv GLUEX_TOP $pwd_string > setup.$version_name.csh
-echo setenv BUILD_SCRIPTS \$GLUEX_TOP/build_scripts >> setup.$version_name.csh
-echo source \$BUILD_SCRIPTS/gluex_env_version.csh $pwd_string/$version_file >> setup.$version_name.csh
+mkdir -p setups
+rm -fv setups/setup.$version_name.sh
+echo export GLUEX_TOP=$pwd_string > setups/setup.$version_name.sh
+echo export BUILD_SCRIPTS=\$GLUEX_TOP/build_scripts >> setups/setup.$version_name.sh
+echo source \$BUILD_SCRIPTS/gluex_env_version.sh $pwd_string/$version_file >> setups/setup.$version_name.sh
+rm -fv setups/setup.$version_name.csh
+echo setenv GLUEX_TOP $pwd_string > setups/setup.$version_name.csh
+echo setenv BUILD_SCRIPTS \$GLUEX_TOP/build_scripts >> setups/setup.$version_name.csh
+echo source \$BUILD_SCRIPTS/gluex_env_version.csh $pwd_string/$version_file >> setups/setup.$version_name.csh
 if [ -f $version_file ]
     then
     echo $version_file exists, skip download
