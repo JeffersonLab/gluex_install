@@ -2,6 +2,34 @@
 import sys
 import requests
 
+############################################
+
+class TermPrint():
+    def __init__(self):
+        self.old_stdout=sys.stdout
+
+    def raw_print(self, text):
+        print text
+
+    def write(self, text):
+        if len(text) == 0: return
+        self.old_stdout.write(text)
+
+class BashPrint():
+    def __init__(self):
+        self.old_stdout=sys.stdout
+
+    def raw_print(self, text):
+        print text
+
+    def write(self, text):
+        text = text.rstrip()
+        if len(text) == 0: return
+        self.old_stdout.write('echo "' + text + '"\n')
+
+############################################
+
+
 def get_release_list():
     releases = {}
 
@@ -23,7 +51,7 @@ def do_build(releases, release_to_build):
         do_show(releases)
 
     # get version XML file
-    os.system("wget --no-check-certificate https://halldweb.jlab.org/dist/%s"%releases[release_to_build])
+    os.system("curl -O https://halldweb.jlab.org/dist/%s"%releases[release_to_build])
     
     # link this to "version.xml" for build scripts
     if os.path.exists("version.xml"):
@@ -32,9 +60,17 @@ def do_build(releases, release_to_build):
 
     # do the build
     os.system("./gluex_install.sh")
+
+def do_config(releases, release_to_build):
+    # needs some more error checking
+    if release_to_build not in releases.keys():
+        print "Release \'%s\' not in list of supported releases!\n"%release_to_build
+        do_show(releases)
     
 
 if __name__ == "__main__":
+    sys.stdout = TermPrint()
+    
     # handle arguments
     command = "show"   # default to showing the list of releases
     if len(sys.argv) > 1:
@@ -51,6 +87,12 @@ if __name__ == "__main__":
                 commmand = "show" # now show what releases are available
             else:
                 release_to_build = sys.argv[2]
+        elif command == "config":
+            if len(sys.argv) == 2:
+                print "Need to specify release to config!\n"
+                commmand = "show" # now show what releases are available
+            else:
+                release_to_build = sys.argv[2]
 
     # get info
     releases = get_release_list()
@@ -60,3 +102,5 @@ if __name__ == "__main__":
         do_show(releases)
     elif command == "build":
         do_build(releases, release_to_build)
+    elif command == "config":
+        do_build(releases, release_to_config)
