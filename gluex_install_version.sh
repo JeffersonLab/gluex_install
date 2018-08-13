@@ -37,6 +37,10 @@ else
     wget --no-check-certificate https://halldweb.jlab.org/dist/$version_file
 fi
 source $BUILD_SCRIPTS/gluex_env_version.sh $version_file
-#make -f $BUILD_SCRIPTS/Makefile_all gluex
-make -f $BUILD_SCRIPTS/Makefile_all gluex2
+# choose new or old-style builds depending on if sim-recon (HALLD_HOME) or halld_recon (HALLD_RECON_HOME) are set
+if [ -z $HALLD_RECON_HOME ]; then
+    make -f $BUILD_SCRIPTS/Makefile_all gluex
+else
+    make -f $BUILD_SCRIPTS/Makefile_all gluex2
+fi
 popd
