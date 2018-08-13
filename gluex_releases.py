@@ -9,6 +9,10 @@ if "GLUEX_INSTALL_HOME" in os.environ:
     GLUEX_INSTALL_HOME = os.environ["GLUEX_INSTALL_HOME"]
 else:
     GLUEX_INSTALL_HOME = os.cwd()
+if "GLUEX_TOP" in os.environ:
+    GLUEX_TOP = os.environ["GLUEX_TOP"]
+else:
+    GLUEX_TOP = os.path.join(os.cwd(),"gluex_top")
 
 ############################################
 
@@ -91,8 +95,8 @@ def do_config(releases, release_to_build):
     sys.stdout.write("source %s/setups/setup.%s.sh"%(GLUEX_TOP,release_to_build))
     
 if __name__ == "__main__":
-    #sys.stdout = TermPrint()
-    sys.stdout = BashPrint()
+    sys.stdout = TermPrint()
+    #sys.stdout = BashPrint()
     
     # get info
     releases = get_release_list()
@@ -108,6 +112,7 @@ if __name__ == "__main__":
             # supported commands
             command_list = [ "show", "show-all", "build", "config" ]
             command = sys.argv[1]
+            print sys.argv
             if command not in command_list:
                 print "\'%s\' not a supported command!"%command
                 print "  commands = %s"%(" ".join(command_list))
@@ -123,7 +128,7 @@ if __name__ == "__main__":
                     print "Need to specify release to config!\n"
                     commmand = "show" # now show what releases are available
                 else:
-                    release_to_build = sys.argv[2]
+                    release_to_config = sys.argv[2]
 
     # do commands
     if command == "show":
@@ -133,4 +138,4 @@ if __name__ == "__main__":
     elif command == "build":
         do_build(releases, release_to_build)
     elif command == "config":
-        do_build(releases, release_to_config)
+        do_config(releases, release_to_config)

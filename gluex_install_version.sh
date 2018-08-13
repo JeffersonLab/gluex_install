@@ -11,7 +11,7 @@ else
     tar zxf latest.tar.gz
     ln -s build_scripts-latest build_scripts
 fi
-if [ ! -z $1 ]
+if [ ! -z $1 ]; then
     version_file=$1
 else
     version_file=version.xml
@@ -37,5 +37,6 @@ else
     wget --no-check-certificate https://halldweb.jlab.org/dist/$version_file
 fi
 source $BUILD_SCRIPTS/gluex_env_version.sh $version_file
-make -f $BUILD_SCRIPTS/Makefile_all gluex
+#make -f $BUILD_SCRIPTS/Makefile_all gluex
+make -f $BUILD_SCRIPTS/Makefile_all gluex2
 popd
