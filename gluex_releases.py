@@ -3,6 +3,9 @@ import sys,os
 import requests
 import re
 import glob
+import pprint
+
+pp = pprint.PrettyPrinter(indent=4)
 
 # globals
 if "GLUEX_INSTALL_HOME" in os.environ:
@@ -55,8 +58,38 @@ def get_release_list():
         releases[release] = xml_file
     return releases
 
-def do_show(releases):
-    local_release_files = get_release_list_local()
+def get_jlab_release_list():
+    releases = []
+    r = requests.get("https://halldweb.jlab.org/dist/")
+    pattern = '.+?<a href=".+?">(version.+?.xml)</a>.+?'
+    p = re.compile(pattern)
+    for entry in r.content.splitlines():
+        m = p.match(entry)
+        if m:
+            releases.append(m.group(1))
+    return releases
+
+def find_version_file(release, releases, jlab_release_files, local_release_files):
+    # figure out which version file to use based on the following hierarchy:
+    # 1. curated alias list
+    # 2. XML files on halldweb
+    # 3. local XML files of format "version_RELEASE.xml" or "version-RELEASE.xml"
+    xml_file = "version_"+release+".xml"
+    if release in releases.keys():
+        return releases[release]
+    elif xml_file in jlab_release_files:
+        if not os.path.exists(xml_file):
+            os.system("curl -O https://halldweb.jlab.org/dist/%s"%xml_file)
+        return xml_file
+    elif xml_file in local_release_files:
+        return xml_file
+    elif "version-"+release+".xml" in local_release_files:
+        return "version-"+release+".xml"
+    else:
+        print "Release \'%s\' could not be found!\n"%release
+        sys.exit(0)
+
+def do_show(releases, local_release_files):
     for release in sorted(releases.keys()):
         if releases[release] in local_release_files:
             release += "*"
@@ -64,35 +97,23 @@ def do_show(releases):
 
 def do_show_allxml(releases):
     print "All versions available at JLab:"
-    r = requests.get("https://halldweb.jlab.org/dist/")
-    pattern = '.+?<a href=".+?">(version.+?.xml)</a>.+?'
-    p = re.compile(pattern)
-    for entry in r.content.splitlines():
-        m = p.match(entry)
-        if m:
-            print m.group(1)
+    for release in releases:
+        print release
 
-def do_build(releases, release_to_build):
-    # needs some more error checking
-    if release_to_build not in releases.keys():
-        print "Release \'%s\' not in list of supported releases!\n"%release_to_build
-        do_show(releases)
-
+def do_build(release_file_to_build):
     # get version XML file
-    os.system("curl -O https://halldweb.jlab.org/dist/%s"%releases[release_to_build])
+    if not os.path.exists(release_file_to_build):
+        os.system("curl -O https://halldweb.jlab.org/dist/%s"%release_file_to_build)
     
     # do the build
-    os.system("./gluex_install_version.sh %s"%releases[release_to_build])
-    print "build of %s completed!"%releases[release_to_build]
+    os.system("./gluex_install_version.sh %s"%release_file_to_build)
+    print "build of %s completed!"%release_file_to_build
 
-def do_config(releases, release_to_build):
-    # needs some more error checking
-    if release_to_build not in releases.keys():
-        print "Release \'%s\' not in list of supported releases!\n"%release_to_build
-        do_show(releases)
+def do_config(release_file_to_config):
+    release_to_config = release_file_to_config[8:-4]  # format: "version_FILE.xml"
 
     # call the release configuration script
-    sys.stdout.write("source %s/setups/setup.%s.sh"%(GLUEX_TOP,release_to_build))
+    sys.stdout.write("source %s/setups/setup.%s.sh"%(GLUEX_TOP,release_to_config))
     
 if __name__ == "__main__":
     sys.stdout = TermPrint()
@@ -100,6 +121,8 @@ if __name__ == "__main__":
     
     # get info
     releases = get_release_list()
+    jlab_release_files = get_jlab_release_list()
+    local_release_files = get_release_list_local()
 
     # handle arguments
     command = "show"   # default to showing the list of releases
@@ -112,7 +135,7 @@ if __name__ == "__main__":
             # supported commands
             command_list = [ "show", "show-all", "build", "config" ]
             command = sys.argv[1]
-            print sys.argv
+            #print sys.argv
             if command not in command_list:
                 print "\'%s\' not a supported command!"%command
                 print "  commands = %s"%(" ".join(command_list))
@@ -122,20 +145,20 @@ if __name__ == "__main__":
                     print "Need to specify release to build!\n"
                     commmand = "show" # now show what releases are available
                 else:
-                    release_to_build = sys.argv[2]
+                    release_to_build = find_version_file(sys.argv[2], releases, jlab_release_files, local_release_files)
             elif command == "config":
                 if len(sys.argv) == 2:
                     print "Need to specify release to config!\n"
                     commmand = "show" # now show what releases are available
                 else:
-                    release_to_config = sys.argv[2]
+                    release_to_config = find_version_file(sys.argv[2], releases, jlab_release_files, local_release_files)
 
     # do commands
     if command == "show":
-        do_show(releases)
+        do_show(releases, local_release_files)
     elif command == "show-all":
-        do_show_allxml(releases)
+        do_show_allxml(jlab_releases)
     elif command == "build":
-        do_build(releases, release_to_build)
+        do_build(release_to_build)
     elif command == "config":
-        do_config(releases, release_to_config)
+        do_config(release_to_config)
