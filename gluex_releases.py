@@ -11,11 +11,11 @@ pp = pprint.PrettyPrinter(indent=4)
 if "GLUEX_INSTALL_HOME" in os.environ:
     GLUEX_INSTALL_HOME = os.environ["GLUEX_INSTALL_HOME"]
 else:
-    GLUEX_INSTALL_HOME = os.cwd()
+    GLUEX_INSTALL_HOME = os.getcwd()
 if "GLUEX_TOP" in os.environ:
     GLUEX_TOP = os.environ["GLUEX_TOP"]
 else:
-    GLUEX_TOP = os.path.join(os.cwd(),"gluex_top")
+    GLUEX_TOP = os.path.join(os.getcwd(),"gluex_top")
 
 ############################################
 
