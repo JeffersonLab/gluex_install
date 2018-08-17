@@ -100,6 +100,11 @@ def do_show_allxml(releases):
     for release in releases:
         print release
 
+def do_show_local(releases):
+    print "All versions locally available:"
+    for release in releases:
+        print release[8:-4]
+
 def do_build(release_file_to_build, build_target):
     # get version XML file
     if not os.path.exists(release_file_to_build):
