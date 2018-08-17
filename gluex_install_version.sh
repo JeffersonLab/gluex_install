@@ -38,9 +38,15 @@ else
 fi
 source $BUILD_SCRIPTS/gluex_env_version.sh $version_file
 # choose new or old-style builds depending on if sim-recon (HALLD_HOME) or halld_recon (HALLD_RECON_HOME) are set
-if [ -z $HALLD_RECON_HOME ]; then
-    make -f $BUILD_SCRIPTS/Makefile_all gluex
+if [ ! -z $2 ]; then
+    build_target=$2
 else
-    make -f $BUILD_SCRIPTS/Makefile_all gluex2
+    if [ -z $HALLD_RECON_HOME ]; then
+	build_target=gluex
+    else
+	build_target=gluex2
+    fi
 fi
+# do the build
+make -f $BUILD_SCRIPTS/Makefile_all $build_target
 popd

@@ -100,13 +100,16 @@ def do_show_allxml(releases):
     for release in releases:
         print release
 
-def do_build(release_file_to_build):
+def do_build(release_file_to_build, build_target):
     # get version XML file
     if not os.path.exists(release_file_to_build):
         os.system("curl -O https://halldweb.jlab.org/dist/%s"%release_file_to_build)
     
     # do the build
-    os.system("./gluex_install_version.sh %s"%release_file_to_build)
+    if build_target is None:
+        os.system("./gluex_install_version.sh %s"%release_file_to_build)
+    else:
+        os.system("./gluex_install_version.sh %s %s"%(release_file_to_build,build_target))
     print "build of %s completed!"%release_file_to_build
 
 def do_config(release_file_to_config):
@@ -152,6 +155,10 @@ if __name__ == "__main__":
                     commmand = "show" # now show what releases are available
                 else:
                     release_to_config = find_version_file(sys.argv[2], releases, jlab_release_files, local_release_files)
+                if len(sys.argv) > 3:
+                    build_target = sys.argv[3]
+                else:
+                    build_target = None
 
     # do commands
     if command == "show":
@@ -159,6 +166,6 @@ if __name__ == "__main__":
     elif command == "show-all":
         do_show_allxml(jlab_releases)
     elif command == "build":
-        do_build(release_to_build)
+        do_build(release_to_build, build_target)
     elif command == "config":
         do_config(release_to_config)
