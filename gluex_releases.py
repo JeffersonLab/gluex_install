@@ -114,13 +114,14 @@ def do_build(release_file_to_build, build_target):
 
 def do_config(release_file_to_config):
     # handle the case we are running at JLab or a JLab-like environment (container)
-    # might as well directly copy the files)
+    # just source the files without copying them
     if not os.path.exists(release_file_to_config) and os.path.exists("/group/halld/www/halldweb/html/dist/"+release_file_to_config):
-        os.system("cp /group/halld/www/halldweb/html/dist/"+release_file_to_config+" .")
-    release_to_config = release_file_to_config[8:-4]  # format: "version_FILE.xml"
+        sys.stdout.write("source $BUILD_SCRIPTS/gluex_env_version.sh /group/halld/www/halldweb/html/dist/%s"%release_file_to_config)
+    else:
+        release_to_config = release_file_to_config[8:-4]  # format: "version_FILE.xml"
 
-    # call the release configuration script
-    sys.stdout.write("source %s/setups/setup.%s.sh"%(GLUEX_TOP,release_to_config))
+        # call the release configuration script
+        sys.stdout.write("source %s/setups/setup.%s.sh"%(GLUEX_TOP,release_to_config))
     
 if __name__ == "__main__":
     sys.stdout = TermPrint()
@@ -140,7 +141,7 @@ if __name__ == "__main__":
             command = "config"
         else:
             # supported commands
-            command_list = [ "show", "show-all", "build", "config", "build-jlab", "config-jlab" ]
+            command_list = [ "show", "show-all", "build", "config", "build-jlab", "config-jlab", "show-local" ]
             command = sys.argv[1]
             #print sys.argv
             if command not in command_list:
@@ -153,22 +154,24 @@ if __name__ == "__main__":
                     commmand = "show" # now show what releases are available
                 else:
                     release_to_build = find_version_file(sys.argv[2], releases, jlab_release_files, local_release_files)
+                if len(sys.argv) > 3:
+                    build_target = sys.argv[3]
+                else:
+                    build_target = None
             elif command == "config" or command == "config-jlab":
                 if len(sys.argv) == 2:
                     print "Need to specify release to config!\n"
                     commmand = "show" # now show what releases are available
                 else:
                     release_to_config = find_version_file(sys.argv[2], releases, jlab_release_files, local_release_files)
-                if len(sys.argv) > 3:
-                    build_target = sys.argv[3]
-                else:
-                    build_target = None
 
     # do commands
     if command == "show":
         do_show(releases, local_release_files)
     elif command == "show-all":
         do_show_allxml(jlab_releases)
+    elif command == "show-local":
+        do_show_local(local_release_files)
     #elif command == "show-cvmfs":
     #    do_show_cvmfs()
     elif command == "build":
