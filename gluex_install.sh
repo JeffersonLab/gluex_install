@@ -1,17 +1,17 @@
 #!/bin/bash
 mkdir -p gluex_top
 pushd gluex_top
+pwd_string=`pwd`
 if [ -e build_scripts ]
     then
-    echo build_scripts already here, skip download
+    echo build_scripts already here, skip installation
 else
-    echo downloading build_scripts tar file
-    rm -rf build_scripts-latest latest.tar.gz build_scripts
-    wget -O latest.tar.gz --no-check-certificate https://github.com/jeffersonlab/build_scripts/archive/latest.tar.gz
-    tar zxf latest.tar.gz
-    ln -s build_scripts-latest build_scripts
+    echo cloning build_scripts repository
+    git clone https://github.com/jeffersonlab/build_scripts
+    pushd build_scripts
+    git checkout latest
+    popd
 fi
-pwd_string=`pwd`
 export GLUEX_TOP=$pwd_string
 export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
 rm -fv setup.sh
