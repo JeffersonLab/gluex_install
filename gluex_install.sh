@@ -29,6 +29,9 @@ else
     echo getting version.xml from halldweb.jlab.org
     wget --no-check-certificate https://halldweb.jlab.org/dist/version.xml
 fi
-source $BUILD_SCRIPTS/gluex_env_version.sh
-make -f $BUILD_SCRIPTS/Makefile_all gluex2
+source setup.sh
+make -f $BUILD_SCRIPTS/Makefile_all gluex_pass1
+source $BUILD_SCRIPTS/gluex_env_clean.sh
+source setup.sh
+make -f $BUILD_SCRIPTS/Makefile_all gluex_pass2
 popd
