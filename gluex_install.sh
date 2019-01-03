@@ -12,25 +12,33 @@ else
     git checkout latest
     popd
 fi
+if [ -e halld_versions ]
+    then
+    echo halld_versions already here, skip installation
+else
+    echo cloning halld_versions repository
+    git clone https://github.com/jeffersonlab/halld_versions
+fi
 export GLUEX_TOP=$pwd_string
 export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
 rm -fv setup.sh
 echo export GLUEX_TOP=$pwd_string > setup.sh
 echo export BUILD_SCRIPTS=\$GLUEX_TOP/build_scripts >> setup.sh
-echo source \$BUILD_SCRIPTS/gluex_env_version.sh $pwd_string/version_jlab.xml >> setup.sh
+echo export HALLD_VERSIONS=\$GLUEX_TOP/halld_versions >> setup.sh
+echo source \$BUILD_SCRIPTS/gluex_env_version.sh \$HALLD_VERSIONS/version_jlab.xml >> setup.sh
 rm -fv setup.csh
 echo setenv GLUEX_TOP $pwd_string > setup.csh
 echo setenv BUILD_SCRIPTS \$GLUEX_TOP/build_scripts >> setup.csh
-echo source \$BUILD_SCRIPTS/gluex_env_version.csh $pwd_string/version_jlab.xml >> setup.csh
-if [ -f version_jlab.xml ]
-    then
-    echo version_jlab.xml exists, skip download
-else
-    echo getting version_jlab.xml from halldweb.jlab.org
-    wget --no-check-certificate https://halldweb.jlab.org/dist/version_jlab.xml
-fi
+echo setenv HALLD_VERSIONS \$GLUEX_TOP/halld_versions >> setup.csh
+echo source \$BUILD_SCRIPTS/gluex_env_version.csh \$HALLD_VERSIONS/version_jlab.xml >> setup.csh
 source setup.sh
 make -f $BUILD_SCRIPTS/Makefile_all gluex_pass1
+if [ $? -ne 0 ]
+then
+    echo pass 1 failed, exiting
+    popd
+    exit 1
+fi
 source $BUILD_SCRIPTS/gluex_env_clean.sh
 source setup.sh
 make -f $BUILD_SCRIPTS/Makefile_all gluex_pass2
