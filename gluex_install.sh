@@ -2,6 +2,7 @@
 mkdir -p gluex_top
 pushd gluex_top
 pwd_string=`pwd`
+mkdir -p resources
 if [ -e build_scripts ]
     then
     echo build_scripts already here, skip installation
