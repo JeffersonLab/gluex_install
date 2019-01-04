@@ -1,0 +1,6 @@
+setenv BUILD_SCRIPTS <gluex-top>/build_scripts
+set build_scripts_this=$BUILD_SCRIPTS
+alias gxenv "source $build_scripts_this/gluex_env_clean.csh; setenv BUILD_SCRIPTS $build_scripts_this; source <gluex-top>/gluex_env_local.csh \!*"
+alias gxclean "source $build_scripts_this/gluex_env_clean.csh"
+echo $PATH | grep $build_scripts_this > /dev/null
+if ($status) setenv PATH ${build_scripts_this}:$PATH

@@ -1,4 +1,14 @@
 #!/bin/bash
+# GI_PATH is the fully qualified directory that contains this script
+gi_script="${BASH_SOURCE[0]}";
+if([ -h "${gi_script}" ]) then
+  while([ -h "${gi_script}" ]) do gi_script=`readlink "${gi_script}"`; done
+fi
+pushd . > /dev/null
+cd `dirname ${gi_script}` > /dev/null
+GI_PATH=`pwd`
+popd  > /dev/null
+#
 mkdir -p gluex_top
 pushd gluex_top
 pwd_string=`pwd`
@@ -20,19 +30,8 @@ else
     echo cloning halld_versions repository
     git clone https://github.com/jeffersonlab/halld_versions
 fi
-export GLUEX_TOP=$pwd_string
-export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
-rm -fv setup.sh
-echo export GLUEX_TOP=$pwd_string > setup.sh
-echo export BUILD_SCRIPTS=\$GLUEX_TOP/build_scripts >> setup.sh
-echo export HALLD_VERSIONS=\$GLUEX_TOP/halld_versions >> setup.sh
-echo source \$BUILD_SCRIPTS/gluex_env_version.sh \$HALLD_VERSIONS/version_jlab.xml >> setup.sh
-rm -fv setup.csh
-echo setenv GLUEX_TOP $pwd_string > setup.csh
-echo setenv BUILD_SCRIPTS \$GLUEX_TOP/build_scripts >> setup.csh
-echo setenv HALLD_VERSIONS \$GLUEX_TOP/halld_versions >> setup.csh
-echo source \$BUILD_SCRIPTS/gluex_env_version.csh \$HALLD_VERSIONS/version_jlab.xml >> setup.csh
-source setup.sh
+$GI_PATH/create_setup_scripts.sh $GI_PATH $pwd_string
+source gluex_env_local.sh
 make -f $BUILD_SCRIPTS/Makefile_all gluex_pass1
 if [ $? -ne 0 ]
 then

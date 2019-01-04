@@ -1,0 +1,10 @@
+export BUILD_SCRIPTS=<gluex-top>/build_scripts
+build_scripts_this=$BUILD_SCRIPTS
+function gxenv() { source $build_scripts_this/gluex_env_clean.sh; \
+    export BUILD_SCRIPTS=$build_scripts_this; \
+    source <gluex-top>/gluex_env_local.sh $1; \
+    }
+function gxclean() { source $build_scripts_this/gluex_env_clean.sh; }
+if [ `echo $PATH | grep -c $build_scripts_this` -eq 0 ]
+    then export PATH=$build_scripts_this:$PATH
+fi
