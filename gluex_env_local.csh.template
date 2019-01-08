@@ -1,0 +1,7 @@
+setenv GLUEX_TOP <gluex-top>
+if (! $?BUILD_SCRIPTS) setenv BUILD_SCRIPTS $GLUEX_TOP/build_scripts
+setenv HALLD_VERSIONS $GLUEX_TOP/halld_versions
+source $BUILD_SCRIPTS/gluex_env_version.csh $HALLD_VERSIONS/version_jlab.xml
+setenv CCDB_CONNECTION mysql://ccdb_user@hallddb.jlab.org/ccdb
+setenv JANA_CALIB_URL $CCDB_CONNECTION
+setenv JANA_RESOURCE_DIR $GLUEX_TOP/resources
