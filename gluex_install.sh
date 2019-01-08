@@ -40,6 +40,6 @@ then
     exit 1
 fi
 source $BUILD_SCRIPTS/gluex_env_clean.sh
-source setup.sh
+source gluex_env_local.sh
 make -f $BUILD_SCRIPTS/Makefile_all gluex_pass2
 popd
