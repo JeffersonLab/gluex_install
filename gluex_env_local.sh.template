@@ -3,7 +3,13 @@ if [ -z "$BUILD_SCRIPTS" ]
     then export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
 fi
 export HALLD_VERSIONS=$GLUEX_TOP/halld_versions
-source $BUILD_SCRIPTS/gluex_env_version.sh $HALLD_VERSIONS/version_jlab.xml
+if [ -z $1 ]
+    then
+    VERSION_XML=$HALLD_VERSIONS/version.xml
+else
+    VERSION_XML=$1
+fi
+source $BUILD_SCRIPTS/gluex_env_version.sh $VERSION_XML
 export CCDB_CONNECTION=mysql://ccdb_user@hallddb.jlab.org/ccdb
 export JANA_CALIB_URL=$CCDB_CONNECTION
 export JANA_RESOURCE_DIR=$GLUEX_TOP/resources
