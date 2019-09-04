@@ -14,6 +14,7 @@ gi_path=`pwd`
 gluex_top=$1
 cd $gluex_top
 for name in gluex_env_boot.sh gluex_env_boot.csh gluex_env_local.sh gluex_env_local.csh; do
+    rm -f $name
     echo creating script $name
     create_script $name
 done
