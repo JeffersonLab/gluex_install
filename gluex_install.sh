@@ -30,7 +30,7 @@ else
     echo cloning halld_versions repository
     git clone https://github.com/jeffersonlab/halld_versions
 fi
-$GI_PATH/create_setup_scripts.sh $GI_PATH $pwd_string
+$GI_PATH/create_setup_scripts.sh $pwd_string
 source gluex_env_local.sh
 make -f $BUILD_SCRIPTS/Makefile_all gluex_pass1
 if [ $? -ne 0 ]
