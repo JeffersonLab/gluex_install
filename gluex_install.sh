@@ -20,7 +20,7 @@ else
     echo cloning build_scripts repository
     git clone https://github.com/jeffersonlab/build_scripts
     pushd build_scripts
-    git checkout latest
+    ./update_to_latest.sh
     popd
 fi
 if [ -e halld_versions ]
