@@ -5,6 +5,7 @@ yum install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     bzip2-devel tcsh scons expat-devel \
     perl-XML-Simple perl-XML-Writer patch perl-File-Slurp git \
     mesa-libGLU-devel cmake python-devel qt-devel boost-devel gsl-devel \
-    libtool which bc nano cmake3 tbb-devel xrootd-client-libs xrootd-client
+    libtool which bc nano cmake3 tbb-devel xrootd-client-libs xrootd-client \
+    libtiprc-devel emacs
 cd /usr/include
 ln -s freetype2/freetype freetype
