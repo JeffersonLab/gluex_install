@@ -8,7 +8,7 @@ apt-get -y install gfortran xutils-dev libxt-dev libxft-dev \
     libxml-simple-perl libxml-writer-perl libfile-slurp-perl git cmake \
     python-dev libglu1-mesa-dev libqt5-dev libxmu-dev libboost-dev \
     libboost-python-dev libxi-dev libgsl-dev wget autoconf libtool curl g++ \
-    libtirpc-dev
+    libtbb-dev libtirpc-dev
 
 cd /usr/bin; ln -s make gmake
 
