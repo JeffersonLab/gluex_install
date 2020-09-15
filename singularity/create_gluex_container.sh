@@ -2,15 +2,14 @@
 dist_token=$1
 gluex_prereqs_script=$2
 
-container_meta_dir=/beach/singularity/containers
-recipe_dir=/beach/singularity/recipes
-build_meta_dir=/fantom/scratch
+container_meta_dir=/scratch/singularity/containers
 gluex_install_dir=/home/marki/git/gluex_install
+recipe_dir=$gluex_install_dir/singularity/recipes
 
 recipe=$recipe_dir/Singularity.$dist_token
 raw_sandbox=$container_meta_dir/$dist_token
 gluex_sandbox=$container_meta_dir/gluex_$dist_token
-gluex_simg=$container_meta_dir/gluex_$dist_token.simg
+gluex_sif=$container_meta_dir/gluex_$dist_token.sif
 
 if [ -d $raw_sandbox ]
 then
@@ -28,11 +27,11 @@ cp -pr $raw_sandbox $gluex_sandbox
 singularity exec --writable $gluex_sandbox mkdir /gluex_install
 singularity exec --bind $gluex_install_dir:/gluex_install --writable $gluex_sandbox /gluex_install/$gluex_prereqs_script
 
-if [ -d $gluex_simg ]
+if [ -d $gluex_sif ]
 then
-    echo gluex simg $gluex_simg exists, exiting
+    echo gluex simg $gluex_sif exists, exiting
     exit 1
 fi
-singularity build $gluex_simg $gluex_sandbox
+singularity build $gluex_sif $gluex_sandbox
 
 
