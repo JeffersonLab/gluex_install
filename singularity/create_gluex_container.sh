@@ -2,7 +2,7 @@
 dist_token=$1
 gluex_prereqs_script=$2
 
-container_meta_dir=/scratch/singularity/containers
+container_meta_dir=/beach/singularity/containers
 gluex_install_dir=/home/marki/git/gluex_install
 recipe_dir=$gluex_install_dir/singularity/recipes
 
