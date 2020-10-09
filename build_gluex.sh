@@ -8,6 +8,13 @@ pushd . > /dev/null
 cd `dirname ${gi_script}` > /dev/null
 GI_PATH=`pwd`
 popd  > /dev/null
-$GI_PATH/create_gluex_top.sh
-cd gluex_top
-$GI_PATH/build_gluex.sh
+source gluex_env_boot.sh
+gxenv
+make -f $BUILD_SCRIPTS/Makefile_all gluex_pass1
+if [ $? -ne 0 ]
+then
+    echo pass 1 failed, exiting
+    exit 1
+fi
+gxenv
+make -f $BUILD_SCRIPTS/Makefile_all gluex_pass2
