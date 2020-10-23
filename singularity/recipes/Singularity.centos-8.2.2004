@@ -1,2 +1,0 @@
-Bootstrap: docker
-From: centos:8.2.2004
