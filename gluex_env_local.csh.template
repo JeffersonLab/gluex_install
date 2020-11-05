@@ -2,7 +2,7 @@ setenv GLUEX_TOP <gluex-top>
 if (! $?BUILD_SCRIPTS) setenv BUILD_SCRIPTS $GLUEX_TOP/build_scripts
 setenv HALLD_VERSIONS $GLUEX_TOP/halld_versions
 if ( "x$1" == "x" ) then
-    set VERSION_XML=$HALLD_VERSIONS/version.xml
+    set VERSION_XML=$HALLD_VERSIONS/<default-version-set>
 else
     set VERSION_XML=$1
 endif

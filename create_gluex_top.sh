@@ -1,4 +1,17 @@
 #!/bin/bash
+
+while getopts "s:b:" arg
+do
+    case $arg in
+	s)
+	    default_version_set=$OPTARG
+	    ;;
+	b)
+	    build_scripts_branch=$OPTARG
+	    ;;
+    esac
+done
+
 # GI_PATH is the fully qualified directory that contains this script
 gi_script="${BASH_SOURCE[0]}";
 if([ -h "${gi_script}" ]) then
@@ -19,9 +32,21 @@ if [ -e build_scripts ]
 else
     echo cloning build_scripts repository
     git clone https://github.com/jeffersonlab/build_scripts
-    pushd build_scripts
-    ./update_to_latest.sh
-    popd
+    pushd build_scripts > /dev/null
+    if [ -z $build_scripts_branch ]
+    then
+	./update_to_latest.sh
+    else
+	echo info: checking out branch $build_scripts_branch
+	if ! git checkout $build_scripts_branch
+	then
+	    echo error: branch not checked out
+	    cd ..
+	    rm -rf build_scripts
+	    exit 1
+	fi
+    fi
+    popd > /dev/null
 fi
 if [ -e halld_versions ]
     then
@@ -30,4 +55,12 @@ else
     echo cloning halld_versions repository
     git clone https://github.com/jeffersonlab/halld_versions
 fi
-$GI_PATH/create_setup_scripts.sh $pwd_string
+if [ $default_version_set ]
+then
+    if [ ! -e halld_versions/$default_version_set ]
+    then
+	echo error: default version set file halld_versions/$default_version_set not found
+	exit 2
+    fi
+fi
+$GI_PATH/create_setup_scripts.sh $pwd_string $default_version_set
