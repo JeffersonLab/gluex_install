@@ -5,7 +5,7 @@ fi
 export HALLD_VERSIONS=$GLUEX_TOP/halld_versions
 if [ -z $1 ]
     then
-    VERSION_XML=$HALLD_VERSIONS/version.xml
+    VERSION_XML=$HALLD_VERSIONS/<default-version-set>
 else
     VERSION_XML=$1
 fi
