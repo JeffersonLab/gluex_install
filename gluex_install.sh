@@ -1,8 +1,26 @@
 #!/bin/bash
 
-while getopts "s:b:" arg
+print_usage() {
+    cat <<EOF
+Usage: gluex_install.sh [-h] [-s DEFAULT_VERSION_SET] [-b BUILD_SCRIPTS_BRANCH]
+
+Options:
+  -h print this usage message
+  -s default version set file for this gluex_top, must exist in
+     \$HALLD_VERSIONS, if omitted version.xml will be used
+  -b branch of build_scripts to be checked out, if omitted the latest
+     tagged version will be checked out
+
+EOF
+}
+
+while getopts "hs:b:" arg
 do
     case $arg in
+	h|\?)
+	    print_usage
+	    exit 0
+	    ;;
 	s)
 	    default_version_set=$OPTARG
 	    ;;
