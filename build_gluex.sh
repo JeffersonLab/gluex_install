@@ -12,7 +12,6 @@ GI_PATH=`pwd`
 popd  > /dev/null
 #
 version_set=$1
-echo DEBUG: version_set argument = \"$version_set\"
 source gluex_env_boot.sh
 gxenv $version_set
 #
