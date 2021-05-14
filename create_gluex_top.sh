@@ -62,5 +62,6 @@ then
 	echo error: default version set file halld_versions/$default_version_set not found
 	exit 2
     fi
+    echo create_gluex_top.sh info: default version set will be $default_version_set
 fi
 $GI_PATH/create_setup_scripts.sh $pwd_string $default_version_set

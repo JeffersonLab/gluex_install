@@ -42,13 +42,15 @@ popd  > /dev/null
 command=$GI_PATH/create_gluex_top.sh
 if [ ! -z $build_scripts_branch ]
 then
+    echo gluex_install.sh info: using branch $build_scripts_branch of build_scripts
     command="$command -b $build_scripts_branch"
 fi
 if [ ! -z $default_version_set ]
 then
+    echo gluex_install.sh info: using $default_version_set as the default version set
     command="$command -s $default_version_set"
 fi
-echo info: executing $command
+echo gluex_install.sh info: executing $command
 if ! $command
 then
     echo error: could not create complete gluex_top
