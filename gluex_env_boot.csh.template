@@ -1,4 +1,3 @@
-set build_scripts=<gluex-top>/build_scripts
+if (! $?BUILD_SCRIPTS) setenv BUILD_SCRIPTS <gluex-top>/build_scripts
 alias gxclean 'source $BUILD_SCRIPTS/gluex_env_clean.csh'
 alias gxenv 'gxclean; source <gluex-top>/gluex_env_local.csh \!*'
-unset build_scripts
