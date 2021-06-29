@@ -9,3 +9,5 @@ yum install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     libtirpc-devel emacs python2-future gdb mariadb
 cd /usr/include
 ln -s freetype2/freetype freetype
+yum install -y centos-release-scl
+yum install -y devtoolset-8
