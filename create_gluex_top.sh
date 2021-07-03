@@ -1,6 +1,7 @@
 #!/bin/bash
 
-while getopts "s:b:" arg
+gluex_top_dir=gluex_top
+while getopts "s:b:t:" arg
 do
     case $arg in
 	s)
@@ -8,6 +9,9 @@ do
 	    ;;
 	b)
 	    build_scripts_branch=$OPTARG
+	    ;;
+	t)
+	    gluex_top_dir=$OPTARG
 	    ;;
     esac
 done
@@ -22,8 +26,13 @@ cd `dirname ${gi_script}` > /dev/null
 GI_PATH=`pwd`
 popd  > /dev/null
 #
-mkdir -p gluex_top
-pushd gluex_top
+if [ -d $gluex_top_dir ]
+then
+    echo "create_gluex_top.sh error: $gluex_top_dir already exists, exiting"
+    exit 1;
+fi
+mkdir -p $gluex_top_dir
+pushd $gluex_top_dir
 pwd_string=`pwd`
 mkdir -p resources
 if [ -e build_scripts ]
