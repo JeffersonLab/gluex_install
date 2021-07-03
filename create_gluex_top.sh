@@ -26,6 +26,11 @@ cd `dirname ${gi_script}` > /dev/null
 GI_PATH=`pwd`
 popd  > /dev/null
 #
+if [ -d $gluex_top_dir ]
+then
+    echo "create_gluex_top.sh error: $gluex_top_dir already exists, exiting"
+    exit 1;
+fi
 mkdir -p $gluex_top_dir
 pushd $gluex_top_dir
 pwd_string=`pwd`

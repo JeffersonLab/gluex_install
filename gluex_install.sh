@@ -43,6 +43,8 @@ pushd . > /dev/null
 cd `dirname ${gi_script}` > /dev/null
 GI_PATH=`pwd`
 popd  > /dev/null
+
+unset BUILD_SCRIPTS # for gluex_install.sh, always use the local build_scripts
 command=$GI_PATH/create_gluex_top.sh
 if [ ! -z $build_scripts_branch ]
 then
@@ -56,7 +58,7 @@ then
 fi
 if [ ! -z $gluex_top_dir ]
 then
-    echo gluex_install.sh info: $gluex_top_dir GLUEX_TOP will be GLUEX_TOP
+    echo gluex_install.sh info: $gluex_top_dir will be GLUEX_TOP
     command="$command -t $gluex_top_dir"
 else
     $gluex_top_dir=gluex_top
