@@ -10,11 +10,12 @@ Options:
      \$HALLD_VERSIONS, if omitted version.xml will be used
   -b branch of build_scripts to be checked out, if omitted the latest
      tagged version will be checked out
+  -t name for the GLUEX_TOP directory, if omitted gluex_top will be used
 
 EOF
 }
 
-while getopts "hs:b:" arg
+while getopts "hs:b:t:" arg
 do
     case $arg in
 	h|\?)
@@ -26,6 +27,9 @@ do
 	    ;;
 	b)
 	    build_scripts_branch=$OPTARG
+	    ;;
+	t)
+	    gluex_top_dir=$OPTARG
 	    ;;
     esac
 done
@@ -50,11 +54,18 @@ then
     echo gluex_install.sh info: using $default_version_set as the default version set
     command="$command -s $default_version_set"
 fi
+if [ ! -z $gluex_top_dir ]
+then
+    echo gluex_install.sh info: $gluex_top_dir GLUEX_TOP will be GLUEX_TOP
+    command="$command -t $gluex_top_dir"
+else
+    $gluex_top_dir=gluex_top
+fi
 echo gluex_install.sh info: executing $command
 if ! $command
 then
     echo error: could not create complete gluex_top
     exit 1
 fi
-cd gluex_top
+cd $gluex_top_dir
 $GI_PATH/build_gluex.sh
