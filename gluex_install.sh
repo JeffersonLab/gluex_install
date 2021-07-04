@@ -11,11 +11,22 @@ Options:
   -b branch of build_scripts to be checked out, if omitted the latest
      tagged version will be checked out
   -t name for the GLUEX_TOP directory, if omitted gluex_top will be used
+  -r re-use the GLUEX_TOP found, do not exit due to its existence.
 
 EOF
 }
 
-while getopts "hs:b:t:" arg
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+YELLOW='\033[0;33m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+info="${BLUE}gluex_install.sh ${GREEN}info${NC}"
+warning="${BLUE}gluex_install.sh ${YELLOW}info${NC}"
+error="${BLUE}gluex_install.sh ${RED}info${NC}"
+
+reuse_gluex_top_dir=false
+while getopts "hs:b:t:r" arg
 do
     case $arg in
 	h|\?)
@@ -30,6 +41,9 @@ do
 	    ;;
 	t)
 	    gluex_top_dir=$OPTARG
+	    ;;
+	r)
+	    reuse_gluex_top_dir=true
 	    ;;
     esac
 done
@@ -48,26 +62,31 @@ unset BUILD_SCRIPTS # for gluex_install.sh, always use the local build_scripts
 command=$GI_PATH/create_gluex_top.sh
 if [ ! -z $build_scripts_branch ]
 then
-    echo gluex_install.sh info: using branch $build_scripts_branch of build_scripts
+    echo -e ${info}: using branch $build_scripts_branch of build_scripts
     command="$command -b $build_scripts_branch"
 fi
 if [ ! -z $default_version_set ]
 then
-    echo gluex_install.sh info: using $default_version_set as the default version set
+    echo -e ${info}: using $default_version_set as the default version set
     command="$command -s $default_version_set"
 fi
 if [ ! -z $gluex_top_dir ]
 then
-    echo gluex_install.sh info: $gluex_top_dir will be GLUEX_TOP
+    echo -e ${info}: $gluex_top_dir will be GLUEX_TOP
     command="$command -t $gluex_top_dir"
 else
     $gluex_top_dir=gluex_top
 fi
-echo gluex_install.sh info: executing $command
+if [ "$reuse_gluex_top_dir" = "true" ]
+then
+    command="$command -r"
+fi
+echo -e ${info}: executing $command
 if ! $command
 then
-    echo error: could not create complete gluex_top
+    echo -e ${error}: could not create complete gluex_top
     exit 1
 fi
 cd $gluex_top_dir
 $GI_PATH/build_gluex.sh
+echo -e ${info}: done
