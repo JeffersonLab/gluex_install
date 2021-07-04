@@ -12,6 +12,7 @@ Options:
      tagged version will be checked out
   -t name for the GLUEX_TOP directory, if omitted gluex_top will be used
   -r re-use the GLUEX_TOP found, do not exit due to its existence.
+  -u URL of the build_scripts repository
 
 EOF
 }
@@ -26,7 +27,7 @@ warning="${BLUE}gluex_install.sh ${YELLOW}info${NC}"
 error="${BLUE}gluex_install.sh ${RED}info${NC}"
 
 reuse_gluex_top_dir=false
-while getopts "hs:b:t:r" arg
+while getopts "hs:b:t:ru:" arg
 do
     case $arg in
 	h|\?)
@@ -44,6 +45,9 @@ do
 	    ;;
 	r)
 	    reuse_gluex_top_dir=true
+	    ;;
+	u)
+	    build_scripts_url=$OPTARG
 	    ;;
     esac
 done
@@ -80,6 +84,11 @@ fi
 if [ "$reuse_gluex_top_dir" = "true" ]
 then
     command="$command -r"
+fi
+if [ ! -z $build_scripts_url ]
+then
+    echo -e ${info}: checkout out build_scripts from $build_scripts_url
+    command="$command -u $build_scripts_url"
 fi
 echo -e ${info}: executing $command
 if ! $command
