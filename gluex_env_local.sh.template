@@ -1,7 +1,4 @@
 export GLUEX_TOP=<gluex-top>
-if [ -z "$BUILD_SCRIPTS" ]
-    then export BUILD_SCRIPTS=$GLUEX_TOP/build_scripts
-fi
 export HALLD_VERSIONS=$GLUEX_TOP/halld_versions
 if [ -z $1 ]
     then
