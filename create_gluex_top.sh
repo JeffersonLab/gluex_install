@@ -2,7 +2,9 @@
 
 gluex_top_dir=gluex_top
 reuse_gluex_top_dir=false
-while getopts "s:b:t:r" arg
+build_scripts_default_url=https://github.com/jeffersonlab/build_scripts
+build_scripts_url=$build_scripts_default_url
+while getopts "s:b:t:ru:" arg
 do
     case $arg in
 	s)
@@ -16,6 +18,9 @@ do
 	    ;;
 	r)
 	    reuse_gluex_top_dir=true
+	    ;;
+	u)
+	    build_scripts_url=$OPTARG
 	    ;;
     esac
 done
@@ -47,11 +52,14 @@ then
     echo build_scripts already here, skip installation
 else
     echo cloning build_scripts repository
-    git clone https://github.com/jeffersonlab/build_scripts
+    git clone $build_scripts_url
     pushd build_scripts > /dev/null
     if [ -z $build_scripts_branch ]
     then
-	./update_to_latest.sh
+	if [ "$build_scripts_url" = "$build_scripts_default_url" ]
+	then # this is the "JeffersonLab" repo, other repos may not have releases defined
+	    ./update_to_latest.sh
+	fi
     else
 	echo info: checking out branch $build_scripts_branch
 	if ! git checkout $build_scripts_branch
