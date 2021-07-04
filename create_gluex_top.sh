@@ -1,7 +1,8 @@
 #!/bin/bash
 
 gluex_top_dir=gluex_top
-while getopts "s:b:t:" arg
+reuse_gluex_top_dir=false
+while getopts "s:b:t:r" arg
 do
     case $arg in
 	s)
@@ -12,6 +13,9 @@ do
 	    ;;
 	t)
 	    gluex_top_dir=$OPTARG
+	    ;;
+	r)
+	    reuse_gluex_top_dir=true
 	    ;;
     esac
 done
@@ -26,17 +30,20 @@ cd `dirname ${gi_script}` > /dev/null
 GI_PATH=`pwd`
 popd  > /dev/null
 #
-if [ -d $gluex_top_dir ]
+if [ "$reuse_gluex_top_dir" = "false" ]
 then
-    echo "create_gluex_top.sh error: $gluex_top_dir already exists, exiting"
-    exit 1;
+    if [ -d $gluex_top_dir ]
+    then
+	echo "create_gluex_top.sh error: $gluex_top_dir already exists, exiting"
+	exit 1;
+    fi
 fi
 mkdir -p $gluex_top_dir
 pushd $gluex_top_dir
 pwd_string=`pwd`
 mkdir -p resources
 if [ -e build_scripts ]
-    then
+then
     echo build_scripts already here, skip installation
 else
     echo cloning build_scripts repository
