@@ -9,6 +9,6 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     mesa-libGLU-devel cmake python36-devel qt5-devel boost-devel gsl-devel \
     libtool which bc nano cmake3 xrootd-client-libs xrootd-client \
     python2 libnsl2-devel make boost-python3-devel libXi-devel python3-future \
-    emacs gdb mariadb
+    emacs gdb mariadb xterm
 cd /usr/include
 ln -s freetype2/freetype freetype
