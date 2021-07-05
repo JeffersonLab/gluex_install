@@ -23,8 +23,8 @@ YELLOW='\033[0;33m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 info="${BLUE}gluex_install.sh ${GREEN}info${NC}"
-warning="${BLUE}gluex_install.sh ${YELLOW}info${NC}"
-error="${BLUE}gluex_install.sh ${RED}info${NC}"
+warning="${BLUE}gluex_install.sh ${YELLOW}warning${NC}"
+error="${BLUE}gluex_install.sh ${RED}error${NC}"
 
 reuse_gluex_top_dir=false
 while getopts "hs:b:t:ru:" arg
