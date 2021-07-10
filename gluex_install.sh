@@ -79,7 +79,7 @@ then
     echo -e ${info}: $gluex_top_dir will be GLUEX_TOP
     command="$command -t $gluex_top_dir"
 else
-    $gluex_top_dir=gluex_top
+    gluex_top_dir=gluex_top
 fi
 if [ "$reuse_gluex_top_dir" = "true" ]
 then
