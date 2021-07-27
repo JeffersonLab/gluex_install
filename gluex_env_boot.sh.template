@@ -4,7 +4,9 @@ then
 else
     export BUILD_SCRIPTS=$1 
 fi
+unset gxclean
 function gxclean() { source $BUILD_SCRIPTS/gluex_env_clean.sh; }
+unset gxenv
 function gxenv() { gxclean; \
     source <gluex-top>/gluex_env_local.sh $1
 }

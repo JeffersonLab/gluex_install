@@ -1,11 +1,12 @@
 #!/bin/bash
 
-gluex_top=$1
-default_version_set=$2
-if [ -z $default_version_set ]
-then
-    default_version_set=version.xml
-fi
+function print_help_message {
+    echo usage:
+    echo
+    echo "    "create_setup_scripts.sh \<gluex-top-directory\> \<default-version_set\>
+    echo
+    echo note: \<default-version-set\> must be in \$HALLD_VERSIONS
+}
 
 function create_script {
     gt=`echo $gluex_top | sed -e 's./.\\\\/.g'`
@@ -13,6 +14,19 @@ function create_script {
 	| sed -e "s/<default-version-set>/${default_version_set}/" \
 	      > $1
 }
+
+if [ "$1" == "-h" ]
+then
+    print_help_message
+    exit 0
+fi
+
+gluex_top=$1
+default_version_set=$2
+if [ -z $default_version_set ]
+then
+    default_version_set=version.xml
+fi
 
 gi_script="${BASH_SOURCE[0]}";
 if([ -h "${gi_script}" ]) then
