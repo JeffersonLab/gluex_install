@@ -6,6 +6,11 @@ else
 fi
 unset gxclean
 function gxclean() { source $BUILD_SCRIPTS/gluex_env_clean.sh; }
+unset gxclean_all
+function gxclean_all() {
+    source $BUILD_SCRIPTS/gluex_env_clean.sh
+    unset BUILD_SCRIPTS gxclean gxclean_all gxenv
+}
 unset gxenv
 function gxenv() { gxclean; \
     source <gluex-top>/gluex_env_local.sh $1

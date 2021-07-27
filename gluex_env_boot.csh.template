@@ -4,4 +4,5 @@ else
     setenv BUILD_SCRIPTS $1
 endif
 alias gxclean 'source $BUILD_SCRIPTS/gluex_env_clean.csh'
+alias gxclean_all 'source $BUILD_SCRIPTS/gluex_env_clean.csh; unsetenv BUILD_SCRIPTS; unalias gxclean gxclean_all gxenv'
 alias gxenv 'gxclean; source <gluex-top>/gluex_env_local.csh \!*'
