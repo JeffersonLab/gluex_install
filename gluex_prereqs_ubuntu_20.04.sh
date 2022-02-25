@@ -8,7 +8,8 @@ apt-get -y install gfortran xutils-dev libxt-dev libxft-dev \
     libxml-simple-perl libxml-writer-perl libfile-slurp-perl git cmake \
     python-dev libglu1-mesa-dev qt5-default libxmu-dev libboost-dev \
     libboost-python-dev libxi-dev libgsl-dev wget autoconf libtool curl g++ \
-    libtirpc-dev python3-future libfmt-dev bc xterm emacs
+    libtirpc-dev python3-future libfmt-dev bc xterm emacs \
+    libboost-system1.71-dev
 apt-get install apt-file gdb
 apt-file update
 
