@@ -19,7 +19,8 @@ cd /usr/include # for cernlib
 for file in ft2build.h config freetype.h fttypes.h ftsystem.h ftimage.h \
     fterrors.h ftmoderr.h fterrdef.h
 do
-    ln -s freetype2/$file .
+    fileloc=$(find /usr/include/freetype2/ -name $file )
+    ln -s fileloc .
 done
 
 cd /usr/include/freetype2 ; ln -s ../freetype2 freetype # for ROOT
