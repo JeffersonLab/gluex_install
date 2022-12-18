@@ -7,7 +7,7 @@ yum install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     mesa-libGLU-devel cmake python-devel qt-devel boost-devel gsl-devel \
     libtool which bc nano cmake3 tbb-devel xrootd-client-libs xrootd-client \
     libtirpc-devel emacs python2-future gdb mariadb xterm python3-devel \
-    boost-python36-devel fmt-devel qt5-qtbase-devel
+    boost-python36-devel fmt-devel qt5-qtbase-devel xload xclock xeyes xev gedit
 cd /usr/include
 ln -s freetype2/freetype freetype
 yum install -y centos-release-scl
