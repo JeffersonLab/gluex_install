@@ -1,0 +1,16 @@
+ -- gxrun --
+ tool to run software in the GlueX container using the latest version set.
+
+This tool is intended to be e.g. used when running on the farm or when you know exactly know what commands you need to run in the container. If you want to use the container for development please use gxshell.
+
+Usage:
+	add gxrun to your path; set environment variable HD_SINGULARITY to point to your hd_singularity directory or amend path to gluexrunscript.sh in gxrun
+	then run commands as you would normally but prepend with "gxrun"
+
+	e.g.
+		gxrun printenv
+	or
+		gxrun hd_root -h
+
+
+	if you want to use a different version set for running the software change the path in gluexrunscript.sh appropriately

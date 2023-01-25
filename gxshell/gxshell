@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+#taken from eic-shell
+
+piped_args=()
+if [ -p /dev/stdin ]; then
+  # If we want to read the input line by line
+  while IFS= read line; do
+    piped_args+=("${line}")
+  done
+fi
+
+## Properly setup environment
+. /etc/gluex-env.sh
+
+
+### Fire off bash
+if [ "${#piped_args[@]}" != "0" ]; then
+  printf "%s\n" "${piped_args[@]}" | bash -s -- --norc --noprofile
+elif [ $# -gt 0 ]; then
+  exec bash -c "$@"
+else
+  exec bash --norc --noprofile
+fi

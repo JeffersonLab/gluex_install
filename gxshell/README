@@ -1,0 +1,23 @@
+ -- gxshell --
+tool to open a bash shell within the GlueX CentOS7.9 container (heavily inspired by and pinched from eic-shell, https://github.com/eic/eic-shell)
+
+The tool will open a bash shell and set up the latest GlueX software within the GlueX container. This requires singularity and cvmfs (recommended) to be correctly installed and configured.
+For more information see https://halldweb.jlab.org/wiki/index.php/HOWTO_use_the_GlueX_Singularity_Container.
+
+
+Usage:
+	Set up an alias like
+		alias gxshell='singularity exec --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_prod:v1 gxshell'
+
+	If you do not use cvmfs, point to the correct container on your system. Adjust binds as required.
+	Then simply call
+		gxshell
+	and enjoy the magic world of a container that has all your software correctly set up.
+
+
+Setup (only container maintainers):
+	Copy the following files into the respective directories.
+		cp gxshell /usr/local/bin/gxshell
+		cp gluex-env.sh /etc/gluex-env.sh
+		cp 10-docker2singularity.sh /.singularity.d/env/10-docker2singularity.sh
+		cp 99-zz_cntrenv.sh /.singularity.d/env/99-zz_cntrenv.sh

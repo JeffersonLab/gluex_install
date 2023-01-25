@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+CMDLINE_ARGS=""
+# prepare command line arguments for evaluation
+for arg in "$@"; do
+    CMDLINE_ARGS="${CMDLINE_ARGS} $arg"
+done
+# echo $CMDLINE_ARGS
+
+singularity run -e --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_prod:v1 ${HD_SINGULARITY}/scripts/gxrun/gluexrunscript.sh $CMDLINE_ARGS
+
+exit 0
