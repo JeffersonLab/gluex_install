@@ -19,5 +19,4 @@ Setup (only container maintainers):
 	Copy the following files into the respective directories.
 		cp gxshell /usr/local/bin/gxshell
 		cp gluex-env.sh /etc/gluex-env.sh
-		cp 10-docker2singularity.sh /.singularity.d/env/10-docker2singularity.sh
 		cp 99-zz_cntrenv.sh /.singularity.d/env/99-zz_cntrenv.sh
