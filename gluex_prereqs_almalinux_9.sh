@@ -12,8 +12,8 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     boost-devel gsl-devel \
     libtool which bc nano cmake3 xrootd-client-libs xrootd-client \
     make boost-python3-devel libXi-devel python3-future \
-    emacs gdb mariadb xterm python3-devel boost-python3-devel fmt-devel
-    #mysql-devel \
+    emacs gdb mariadb xterm python3-devel boost-python3-devel fmt-devel \
+    libtirpc-devel mysql-devel
     #qt5-devel
     #python2
     #libnsl2-devel
