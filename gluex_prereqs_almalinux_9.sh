@@ -4,6 +4,7 @@ dnf -y install epel-release
 dnf -y install dnf-plugins-core
 #dnf config-manager --set-enabled PowerTools
 #dnf config-manager --set-enabled powertools
+dnf config-manager --set-enabled crb
 dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     openmotif-devel libXpm-devel \
     bzip2-devel tcsh python3-scons expat-devel \
