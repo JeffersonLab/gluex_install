@@ -14,7 +14,7 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     libtool which bc nano cmake3 xrootd-client-libs xrootd-client \
     make boost-python3-devel libXi-devel python3-future \
     emacs gdb mariadb xterm python3-devel boost-python3-devel fmt-devel \
-    libtirpc-devel mariadb-devel python3-mysqlclient
+    libtirpc-devel mariadb-devel python3-mysqlclient xrootd-devel xrootd-client-devel
     #qt5-devel
 cd /usr/include
 ln -s freetype2/freetype freetype
