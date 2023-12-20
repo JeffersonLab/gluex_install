@@ -6,7 +6,7 @@ dnf -y install dnf-plugins-core
 #dnf config-manager --set-enabled powertools
 dnf config-manager --set-enabled crb
 dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
-    openmotif-devel libXpm-devel \
+    openmotif-devel libXpm-devel python-unversioned-command \
     bzip2-devel tcsh python3-scons expat-devel \
     perl-XML-Simple perl-XML-Writer patch perl-File-Slurp git \
     mesa-libGLU-devel cmake python3-devel \
