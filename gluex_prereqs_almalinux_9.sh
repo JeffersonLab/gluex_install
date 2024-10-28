@@ -9,7 +9,7 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     openmotif-devel libXpm-devel python-unversioned-command \
     bzip2-devel tcsh python3-scons expat-devel \
     perl-XML-Simple perl-XML-Writer patch perl-File-Slurp git \
-    mesa-libGLU-devel cmake \
+    mesa-libGLU-devel cmake glibc-langpack-en \
     boost-devel gsl-devel \
     libtool which bc nano cmake3 xrootd-client-libs xrootd-client \
     make libXi-devel python3-future \
