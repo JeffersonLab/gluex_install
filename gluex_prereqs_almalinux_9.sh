@@ -17,10 +17,8 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     libtirpc-devel mariadb-devel python3-mysqlclient xrootd-devel xrootd-client-devel \
     libnsl2-devel qt5 qt5-qtx11extras qt5-devel \
     python3-sqlalchemy python3-ply python3-click \
-    gfal2-all gfal2-util-scripts gfal2-plugin-xrootd python3-gfal2 python3-gfal2-util \
     apptainer
-pip install mysql-connector-python rucio-clients
-pip install -i https://test.pypi.org/simple/ gluex-rucio-policy-package
+pip install mysql-connector-python
 cd /usr/include
 ln -s freetype2/freetype freetype
 isDockerBuildkit(){
