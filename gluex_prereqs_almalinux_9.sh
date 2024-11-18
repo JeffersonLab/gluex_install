@@ -16,8 +16,8 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     emacs gdb mariadb xterm python3-devel boost-python3-devel fmt-devel \
     libtirpc-devel mariadb-devel python3-mysqlclient xrootd-devel xrootd-client-devel \
     libnsl2-devel qt5 qt5-qtx11extras qt5-devel \
-    python3-sqlalchemy python3-ply python3-click \
-    apptainer
+    python3-sqlalchemy python3-ply python3-click
+#    apptainer
 pip install mysql-connector-python
 cd /usr/include
 ln -s freetype2/freetype freetype
@@ -25,4 +25,7 @@ isDockerBuildkit(){
     local cgroup=/proc/1/cgroup
     test -f $cgroup && [[ "$(<$cgroup)" = *:cpuset:/docker/buildkit/* ]]
 }
-if isDockerBuildkit; then source /gluex_install/gluex_prereqs_postprocessor.sh ; fi
+isKanikoBuild(){
+    test [ "$KANIKO_EXECUTOR" == "true" ]
+}
+if isDockerBuildkit || isKanikoBuild; then source /gluex_install/gluex_prereqs_postprocessor.sh ; fi
