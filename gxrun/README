@@ -13,4 +13,5 @@ Usage:
 		gxrun hd_root -h
 
 
-	if you want to use a different version set for running the software change the path in gluexrunscript.sh appropriately
+	By default $HALLD_VERSION/version.xml will be run. Use option "-v" to change to version set of choice.
+	You can pick which OS container to use with option "-os". Currently options "7" (CentOS7) and "9" (almalinux9) are supported.
