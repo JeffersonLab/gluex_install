@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
 if [ -d /group ]; then
-  echo "I am running in singularity."
+  echo "I am running in singularity:"
+  cat /etc/system-release
+  echo
 else
   echo "Something went wrong with setting up singularity! Abort."
   exit 9
@@ -34,6 +36,11 @@ done
 if [ -e /group/halld/www/halldweb/html/halld_versions/"$VERSION" ] ; then
     echo "source /group/halld/Software/build_scripts/gluex_env_jlab.sh /group/halld/www/halldweb/html/halld_versions/"$VERSION
     source /group/halld/Software/build_scripts/gluex_env_jlab.sh /group/halld/www/halldweb/html/halld_versions/$VERSION
+	echo
+elif [ -e $VERSION ] ; then
+    echo "source /group/halld/Software/build_scripts/gluex_env_jlab.sh "$VERSION
+    source /group/halld/Software/build_scripts/gluex_env_jlab.sh $VERSION
+	echo
 else
     echo $VERSION "does not exist! Abort."
     exit 9
@@ -44,7 +51,7 @@ if [ "$SQLITE" = true ] ; then
     export CCDB_CONNECTION=sqlite:///$PWD/ccdb.sqlite
 fi
 
-printenv
+# printenv
 
 echo $CMDLINE_ARGS
 $CMDLINE_ARGS
