@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 OS="7"
+ENVSTRING=""
 CMDLINE_ARGS=""
 # prepare command line arguments for evaluation
 #for arg in "$@"; do
@@ -12,6 +13,11 @@ while [[ $# -gt 0 ]]; do
 	    shift # past argument
 	    shift # past value
 	    ;;
+    --env)
+        ENVSTRING="--env $2"
+	    shift # past argument
+	    shift # past value
+        ;;
 	*)
 	    CMDLINE_ARGS="${CMDLINE_ARGS} $1"
 	    shift # past argument
@@ -23,10 +29,10 @@ done
 #if OS is neither 7 nor 9 give an error
 if [[ "$OS" == "7" ]]; then
     echo "Attempt to run '${CMDLINE_ARGS}' in CentOS7 container."
-    singularity run -e --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_prod:v1 ${HD_SINGULARITY}/gluex_install/gxrun/gluexrunscript.sh $CMDLINE_ARGS
+    singularity run -e $ENVSTRING --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_prod:v1 ${HD_SINGULARITY}/gluex_install/gxrun/gluexrunscript.sh $CMDLINE_ARGS
 elif [[ "$OS" == "9" ]]; then
     echo "Attempt to run '${CMDLINE_ARGS}' in alma9 container."
-    singularity run -e --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_almalinux_9:latest ${HD_SINGULARITY}/gluex_install/gxrun/gluexrunscript.sh $CMDLINE_ARGS
+    singularity run -e $ENVSTRING --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_almalinux_9:latest ${HD_SINGULARITY}/gluex_install/gxrun/gluexrunscript.sh $CMDLINE_ARGS
 else
     echo "Error: Unsupported operating system version requested. Only Centos7 (7) and alma9 (9) are supported."
     exit 1
