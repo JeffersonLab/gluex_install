@@ -2,6 +2,7 @@
 dnf -y update
 dnf -y install epel-release
 dnf -y install dnf-plugins-core
+yum -y install https://repo.opensciencegrid.org/osg/24-main/osg-24-main-el9-release-latest.rpm
 #dnf config-manager --set-enabled PowerTools
 #dnf config-manager --set-enabled powertools
 dnf config-manager --set-enabled crb
