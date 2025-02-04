@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+return_code=0
 if [ -d /group ]; then
   echo "I am running in singularity:"
   cat /etc/system-release
@@ -55,3 +56,5 @@ fi
 
 echo $CMDLINE_ARGS
 $CMDLINE_ARGS
+return_code=$?
+exit $return_code

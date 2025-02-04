@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+return_code=0
 OS="7"
 ENVSTRING=""
 CMDLINE_ARGS=""
@@ -30,13 +31,15 @@ done
 if [[ "$OS" == "7" ]]; then
     echo "Attempt to run '${CMDLINE_ARGS}' in CentOS7 container."
     singularity run -e $ENVSTRING --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_prod:v1 ${HD_SINGULARITY}/gluex_install/gxrun/gluexrunscript.sh $CMDLINE_ARGS
+    return_code=$?
 elif [[ "$OS" == "9" ]]; then
     echo "Attempt to run '${CMDLINE_ARGS}' in alma9 container."
     singularity run -e $ENVSTRING --bind /cvmfs/oasis.opensciencegrid.org/gluex/group/halld:/group/halld /cvmfs/singularity.opensciencegrid.org/jeffersonlab/gluex_almalinux_9:latest ${HD_SINGULARITY}/gluex_install/gxrun/gluexrunscript.sh $CMDLINE_ARGS
+    return_code=$?
 else
     echo "Error: Unsupported operating system version requested. Only Centos7 (7) and alma9 (9) are supported."
     exit 1
 fi
 
 
-exit 0
+exit $return_code
