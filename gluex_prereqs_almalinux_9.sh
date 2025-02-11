@@ -19,7 +19,8 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     libnsl2-devel qt5 qt5-qtx11extras qt5-devel \
     python3-sqlalchemy python3-ply python3-click \
     apptainer htgettoken osg-ca-certs pelican \
-    gfal2-all gfal2-util-scripts gfal2-plugin-xrootd python3-gfal2 python3-gfal2-util
+    gfal2-all gfal2-util-scripts gfal2-plugin-xrootd python3-gfal2 python3-gfal2-util \
+    hdf5-devel
 pip install mysql-connector-python rucio-clients
 pip install -i https://test.pypi.org/simple/ gluex-rucio-policy-package
 cd /usr/include
