@@ -26,9 +26,9 @@ cd /usr/include
 ln -s freetype2/freetype freetype
 isDockerBuildkit(){
     local cgroup=/proc/1/cgroup
-    test -f $cgroup && [[ "$(<$cgroup)" = *:cpuset:/docker/buildkit/* ]]
+    [[ -f "$cgroup" ]] && grep -q "*:cpuset:/docker/buildkit/" "$cgroup"
 }
 isKanikoBuild(){
-    test ["$KANIKO_EXECUTOR"=="true"]
+    [[ "$KANIKO_EXECUTOR" == "true" ]]
 }
 if isDockerBuildkit || isKanikoBuild; then source /gluex_install/gluex_prereqs_postprocessor.sh ; fi
