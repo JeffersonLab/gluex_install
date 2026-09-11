@@ -23,7 +23,9 @@ dnf install -y subversion wget gcc-c++ gcc-gfortran imake libXt-devel \
     hdf5-devel
 pip install mysql-connector-python rucio-clients-gluex
 cd /usr/include
-ln -s freetype2/freetype freetype
+if [[ ! -e freetype ]]; then
+    ln -s freetype2/freetype freetype
+fi
 isDockerBuildkit(){
     local cgroup=/proc/1/cgroup
     [[ -f "$cgroup" ]] && grep -q '.*:cpuset:/docker/buildkit/' "$cgroup"
