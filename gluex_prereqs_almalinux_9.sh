@@ -29,6 +29,6 @@ isDockerBuildkit(){
     [[ -f "$cgroup" ]] && grep -q '.*:cpuset:/docker/buildkit/' "$cgroup"
 }
 isKanikoBuild(){
-    grep -q '/kaniko/executor' /proc/1/cmdline
+    [[ -d "/kaniko" ]]
 }
 if isDockerBuildkit || isKanikoBuild; then source /gluex_install/gluex_prereqs_postprocessor.sh ; fi
